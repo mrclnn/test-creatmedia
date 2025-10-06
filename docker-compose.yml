@@ -1,0 +1,38 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test_creatmedia
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: my_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_passw
+      MYSQL_DATABASE: test_creatmedia
+      MYSQL_USER: user
+      MYSQL_PASSWORD:
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
