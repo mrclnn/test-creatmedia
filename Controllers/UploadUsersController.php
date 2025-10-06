@@ -5,15 +5,23 @@ namespace Controllers;
 use Errors\BadFileError;
 use Errors\MethodNotAllowedError;
 use lib\DB;
+use lib\Logger;
 use RuntimeException;
 use Throwable;
 
 class UploadUsersController
 {
 
+    private Logger $logger;
+
     const ROUTE_NAME = '/api/upload-users.php';
     const TABLE_NAME = 'users_for_mailing';
     const ROUTE_TYPE = 'POST';
+
+    public function __construct()
+    {
+        $this->logger = new Logger();
+    }
 
 
     /**
@@ -60,7 +68,7 @@ class UploadUsersController
                     $notStoredInDB = false;
                 } catch (Throwable $e){
                     //пишем логи
-                    echo($e->getMessage());
+                    $this->logger->log("{$e->getMessage()} in file {$e->getFile()} at line {$e->getLine()}");
                     $attempt++;
                 }
             }
