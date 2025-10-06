@@ -25,6 +25,5 @@ class Logger
         $logLine = date('H:i:s') . ' - ' . $message . PHP_EOL;
 
         $r = file_put_contents($this->filePath, $logLine, FILE_APPEND);
-        var_dump($r);
     }
 }
