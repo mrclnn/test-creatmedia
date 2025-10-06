@@ -2,13 +2,7 @@
 
 // веб сервер настроен так что все запросы приходят на index.php (см. .htaccess)
 
-// автолоадер
-spl_autoload_register(function ($class) {
-    $file = __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
-    if (file_exists($file)) {
-        require_once $file;
-    }
-});
+include_once 'lib/autoloader.php';
 
 use Controllers\UploadUsersController;
 use Errors\ApiError;
