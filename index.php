@@ -4,6 +4,7 @@
 
 include_once 'lib/autoloader.php';
 
+use Controllers\MakeMailingController;
 use Controllers\UploadUsersController;
 use Errors\ApiError;
 use Errors\UnknownRouteError;
@@ -25,9 +26,10 @@ try {
             $response['message'] = 'Users successfully uploaded';
             break;
 
-//        case '/api/another-route.php':
-//            // другие роуты когда возникнет необходимость
-//            break;
+        case '/api/make-mailing.php':
+            (new MakeMailingController())->handle();
+            $response['message'] = 'MailingWorker succesfully sent';
+            break;
 
         default:
             throw new UnknownRouteError("Unknown route $routeName");
